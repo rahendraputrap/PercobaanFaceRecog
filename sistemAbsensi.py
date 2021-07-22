@@ -40,6 +40,11 @@ while True:
         matches = face_recognition.compare_faces(encodeListKnow,encodeFace)
         faceDis = face_recognition.face_distance(encodeListKnow,encodeFace)
         print(faceDis)
+        cocok = np.argmin(faceDis)
+
+        if matches[cocok]:
+            nama = classNames[cocok].upper()
+            print(nama)
 
 
 
