@@ -2,6 +2,9 @@ import cv2
 import numpy as np
 import face_recognition
 import os
+from datetime import datetime
+
+from pkg_resources import EntryPoint
 
 path = 'gambarAbsensi'
 Gambar = []
@@ -21,6 +24,20 @@ def DataLatih(Gambar):
         encode = face_recognition.face_encodings(img)[0]
         encodeList.append(encode)
     return encodeList
+
+def Absensi(nama):
+    with open('absensi.csv','r+') as f:
+        Daftar = f.readlines()
+        DaftarNama = []
+        for line in Daftar:
+            entry = line.split(',')
+            DaftarNama.append(entry[0])
+        if nama not in DaftarNama:
+            now = datetime.now()
+            dtString = now.strftime('%H:%M:%S')
+            f.writelines(f'\n{nama},{dtString}')
+
+#Absensi('Putra')
 
 encodeListKnow = DataLatih(Gambar)
 print('Data sudah terlatih gan')
@@ -42,6 +59,7 @@ while True:
         print(faceDis)
         cocok = np.argmin(faceDis)
 
+        # Raimu di tandai ng kene :v
         if matches[cocok]:
             nama = classNames[cocok].upper()
             print(nama)
@@ -50,9 +68,11 @@ while True:
             cv2.rectangle(img,(x1,y1),(x2,y2),(0,255,0),2)
             cv2.rectangle(img,(x1,y2-35),(x2,y2),(0,255,0),cv2.FILLED)
             cv2.putText(img,nama,(x1+6,y2-6),cv2.FONT_HERSHEY_COMPLEX,1,(255,255,255),2)
+            Absensi(nama)
+            
 
     cv2.imshow('Webcam',img)
-    cv2.waitKey(1)
+    cv2.waitKey(0)
 
 
 
