@@ -4,7 +4,7 @@ import face_recognition
 
 imgAliga = face_recognition.load_image_file('gambar/aliga base.jpg')
 imgAliga = cv2.cvtColor(imgAliga, cv2.COLOR_BGR2RGB)
-imgCoba = face_recognition.load_image_file('gambar/milos.jpg')
+imgCoba = face_recognition.load_image_file('gambar/aliga test.jpg')
 imgCoba = cv2.cvtColor(imgCoba, cv2.COLOR_BGR2RGB)
 
 faceID = face_recognition.face_locations(imgAliga)[0]
@@ -18,7 +18,9 @@ cv2.rectangle(imgCoba, (faceIDCoba[3],faceIDCoba[0]),(faceIDCoba[1],faceIDCoba[2
 
 # Uji Coba Hasil
 hasil = face_recognition.compare_faces([encodeAliga],encodeCoba)
-print(hasil)
+faceDistance = face_recognition.face_distance([encodeAliga],encodeCoba)
+print(hasil,faceDistance)
+cv2.putText(imgCoba,f'{hasil} {round(faceDistance[0],2)}',(20,50),cv2.FONT_HERSHEY_COMPLEX,1,(0,255,0),2)
 
 cv2.imshow('Aliga', imgAliga)
 cv2.imshow('Testing', imgCoba)
