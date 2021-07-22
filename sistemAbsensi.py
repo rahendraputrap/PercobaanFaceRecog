@@ -29,7 +29,7 @@ print('Data sudah terlatih gan')
 camera = cv2.VideoCapture(0)
 
 while True:
-    ret, img = camera.read()
+    success, img = camera.read()
     imgS = cv2.resize(img,(0,0),None,0.25,0.25)
     imgS = cv2.cvtColor(imgS, cv2.COLOR_BGR2RGB)
 
@@ -37,8 +37,8 @@ while True:
     encodeFrame = face_recognition.face_encodings(imgS, faceFrame)
 
     for encodeFace,faceLoc in zip(encodeFrame,faceFrame):
-        matches = face_recognition.compare_faces(DataLatih,encodeFace)
-        faceDis = face_recognition.face_distance(DataLatih,encodeFace)
+        matches = face_recognition.compare_faces(encodeListKnow,encodeFace)
+        faceDis = face_recognition.face_distance(encodeListKnow,encodeFace)
         print(faceDis)
 
 
