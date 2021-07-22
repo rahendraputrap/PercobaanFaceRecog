@@ -46,6 +46,9 @@ while True:
             nama = classNames[cocok].upper()
             print(nama)
 
+    cv2.imshow('Webcam',img)
+    cv2.waitKey(1)
+
 
 
 # faceID = face_recognition.face_locations(imgAliga)[0]
